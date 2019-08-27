@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import MainView from './components/MainView'
+import Landing from '@/components/Landing'
+import Maker from '@/components/Maker'
 
 // * Use store for authentication check
 // import { store } from './store/store.js'
@@ -9,7 +10,11 @@ import MainView from './components/MainView'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
-    { path: '/', component: MainView}
+    { path: '/', component: Landing, children: [
+      { path: 'music-maker', component: Maker}
+    ]},
+    { path: '/*', redirect: '/' }
   ]
 })
