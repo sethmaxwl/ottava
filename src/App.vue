@@ -1,6 +1,7 @@
 <template lang='pug'>
   div#app
-    router-view.view
+    vue-page-transition(name='fade-in-left')
+      router-view.view
     Sidebar
 </template>
 
@@ -17,8 +18,9 @@ export default {
 
 <style lang="scss">
 @import "@/styles/_vars.scss";
-
+@import "@/styles/_global_styles.scss";
 .view {
   margin-left: $navbar-margin;
 }
+
 </style>

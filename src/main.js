@@ -3,7 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import vuetify from './plugins/vuetify';
+import vuetify from './plugins/vuetify'
+import VuePageTransition from 'vue-page-transition'
 
 import {
   FontAwesomeIcon,
@@ -29,6 +30,8 @@ import {
  Vue.component('font-awesome-layers-text', FontAwesomeLayersText)
 
 Vue.config.productionTip = false
+Vue.use(VuePageTransition)
+
 new Vue({
   router,
   store,
