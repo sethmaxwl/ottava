@@ -1,5 +1,5 @@
 <template lang='pug'>
-  div#app
+  v-app#app
     vue-page-transition(name='fade-in-left')
       router-view.view
     Sidebar

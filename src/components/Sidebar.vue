@@ -30,6 +30,7 @@ export default {
 @import '@/styles/_vars.scss';
 
 #ottava-logo {
+  min-width: 36px;
   width: 55px;
   height: auto;
   margin: auto;

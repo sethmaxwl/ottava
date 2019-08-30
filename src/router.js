@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Landing from '@/components/Landing'
-import Maker from '@/components/Maker'
+import Maker from '@/components/maker-components/MakerPage'
 
 // * Use store for authentication check
 // import { store } from './store/store.js'
