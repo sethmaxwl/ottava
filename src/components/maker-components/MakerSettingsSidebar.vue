@@ -3,14 +3,13 @@
     dark='', :hide-overlay='true', :permanant='true', :right='true')
     v-list.py-0(dense='', nav='')
       v-list-item(two-line='')
-        p Octave {{ this.keyboardSettings.octave }}
+        h3.sidetext Octave {{ this.keyboardSettings.octave }}
       v-list-item(two-line='')
         v-select(v-model='keyboardSettings.oscillatorType', :items='oscillatorTypes', label='Oscillator Type')
       v-list-item(two-line='')
         v-select(v-model='keyboardSettings.waveType', :items='waveTypes', label='Wave Type')
       v-list-item(two-line='')
         v-select(v-model='keyboardSettings.frequency', :items='frequencies', label='Frequency')
-
 </template>
 
 <script>
@@ -50,6 +49,11 @@
           { text: '9', value: 9 }
         ]
       }
+    },
+    methods: {
+      addOctave: function () {
+        this.$store.dispatch('')
+      }
     }
   }
 </script>
@@ -62,5 +66,9 @@
 
 .v-select .dropdown-menu {
   display: grid;
+}
+
+.sidetext {
+  color: #ffffff;
 }
 </style>

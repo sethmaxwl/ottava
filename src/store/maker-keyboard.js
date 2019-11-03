@@ -42,6 +42,12 @@ const getters = {
   }
 }
 
+const actions = {
+  addOctave ({commit}) {
+
+  }
+}
+
 export const MakerKeyboard = {
   namespaced: true,
   state,

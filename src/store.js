@@ -9,5 +9,14 @@ export default new Vuex.Store({
   strict: true,
   modules: {
     MakerKeyboard
+  },
+  state: {
+
+  },
+  actions:{
+
+  },
+  mutations: {
+
   }
 })
