@@ -7,7 +7,7 @@
       v-divider
       v-list-item(two-line='', @click="redirect('/')")
         font-awesome-icon(:icon="['fas', 'home']", size='2x')
-      v-list-item(two-line='', @click="redirect('/music-maker')")
+      v-list-item(two-line='', @click="redirect('/maker')")
         font-awesome-icon(:icon="['fas', 'music']", size='2x')
 </template>
 

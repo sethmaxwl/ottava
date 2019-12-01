@@ -2,9 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import firebase from 'firebase'
 
-import Landing from '@/components/Landing'
-import Maker from '@/components/maker-components/MakerPage'
-import Login from '@/components/Login'
+import Landing from '@/components/pages/Landing'
+import Maker from '@/components/pages/MakerPage'
+import Login from '@/components/pages/Login'
+import Register from '@/components/pages/Register'
 import Dashboard from '@/components/user-components/Dashboard'
 import Settings from '@/components/user-components/Settings'
 
@@ -21,29 +22,38 @@ const router = new Router({
       component: Landing
     },
     {
-      path: '/music-maker',
-      component: Maker
-    },
-    {
       path: '/login',
       name: 'Login',
       component: Login
     },
     {
+      path: '/register',
+      name: 'Register',
+      component: Register
+    },
+    {
       path: '/dashboard',
       name: 'Dashboard',
       component: Dashboard,
-      meta: {
-        requiresAuth: true
-      }
+      // meta: {
+      //   requiresAuth: true
+      // }
+    },
+    {
+      path: '/maker',
+      name: 'Maker',
+      component: Maker,
+      // meta: {
+      //   requiresAuth: true
+      // }
     },
     {
       path: '/settings',
       name: 'Settings',
       component: Settings,
-      meta: {
-        requiresAuth: true
-      }
+      // meta: {
+      //   requiresAuth: true
+      // }
     },
     { path: '/*', redirect: '/' }
   ]
