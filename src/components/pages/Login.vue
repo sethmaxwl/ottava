@@ -3,7 +3,7 @@
     v-container
       v-layout.row.wrap.align-center
         div.spacer-md
-        v-card.d-inline-block.mx-auto.align-center(outlined='', max-width='800', width='800')
+        v-card.d-inline-block.mx-auto.align-center#login-card(outlined='', max-width='800', width='800')
           v-container
             v-row(justify='center', align='center')
               v-col(cols='auto')
@@ -83,5 +83,14 @@
 </script>
 
 <style lang='scss'>
+@import '@/styles/_vars.scss';
 
+  #login {
+    background-color: $ottava-lime;
+    height: 100vh;
+  }
+
+  // #login-card {
+    
+  // }
 </style>

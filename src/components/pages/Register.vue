@@ -1,5 +1,6 @@
 <template lang='pug'>
   div#register
+    Loader(:isLoading='isRegistering')
     v-container
       v-layout.row.wrap.align-center
         div.spacer-md
@@ -7,94 +8,123 @@
           v-container
             v-row(justify='center', align='center')
               v-col(cols='auto')
-                v-img(contain='', width='150', src='@/assets/ottava-logo.svg')
+                v-img(contain='', width='100', src='@/assets/ottava-logo.svg')
             v-row(justify='center', align='center')
               v-col(cols='auto')
                 v-card-title Register
               v-card-text.text-center Welcome to Ottava! We just need a few things to get you started.
             v-row(justify='center', align='center')
               v-container
-                Alert(v-if="this.registerStatus.error" :msg="this.registerStatus.msg", :alertType="this.registerStatus.alertType")
-            v-row(justify='center', align='center')
-              v-container
-                v-text-field(type='text', name='email', label='Email Address', v-model='input.email', placeholder='Email')
-            v-row(justify='center', align='center')
-              v-container
-                v-text-field(type='text', name='username', label='Username', v-model='input.username', placeholder='Username')
-            v-row(justify='center', align='center')
-              v-container
-                v-text-field(type='password', name='password', label='Password', v-model='input.password', placeholder='Password')
-            v-row(justify='center', align='center')
-              v-container
-                v-text-field(type='password', name='confirmPassword', label='Confirm Password', v-model='input.confirmPassword', placeholder='Confirm Password')
-            v-row(justify='center', align='center')
-              v-container
-                v-btn(depressed='', outlined='', block='', color='#db38ae', v-on:click="register()") Register
+                Alert(v-if="this.registerAlert.visible" :msg="this.registerAlert.msg", :alertType="this.registerAlert.alertType")
+            v-container
+              validation-observer(v-slot='{ invalid, validate }')
+                form(@submit.prevent='validate().then(submit)')
+                  validation-provider(name='email', rules='required|email', v-slot='{ errors }')
+                    v-row(justify='center', align='center')
+                      v-text-field(type='text', ref='email', label='Email Address', v-model='input.email', :error-messages='errors', outlined='')
+                  validation-provider(name='password', rules='required|strong-password', v-slot='{ errors }')
+                    v-row(justify='center', align='center')
+                      v-text-field(:type="showPass ? 'text' : 'password'", ref='password', label='Password', v-model='input.password', :error-messages='errors', outlined='', :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'", @click:append="showPass = !showPass")
+                  validation-provider(name='confirmPassword', rules='required|confirmed:password', v-slot='{ errors }')
+                    v-row(justify='center', align='center')
+                      v-text-field(:type="showConfirmPass ? 'text' : 'password'", ref='confirmPassword', label='Confirm Password', v-model='input.confirmPassword', :error-messages='errors', outlined='', :append-icon="showConfirmPass ? 'mdi-eye' : 'mdi-eye-off'", @click:append="showConfirmPass = !showConfirmPass")
+                v-row(justify='center', align='center')
+                  v-container
+                    v-btn(depressed='', outlined='', block='', color='#db38ae', v-on:click="register()", :disabled='invalid') Register
 </template>
 
 <script>
   import Alert from '@/components/general-components/Alert'
+  import Loader from '@/components/general-components/Loader'
+  import { ValidationProvider, ValidationObserver } from 'vee-validate'
+  import { extend } from 'vee-validate'
+  import { required, email, confirmed } from 'vee-validate/dist/rules'
+
+  extend('email', {
+    ...email,
+    message: 'Email address is invalid'
+  })
+  extend('required',  {
+    ...required,
+    message: 'This field is required'
+  })
+  extend('confirmed', {
+    ...confirmed,
+    message: 'Passwords do not match'
+  })
+  extend('strong-password', {
+    validate: value => {
+      //eslint-disable-next-line
+      const strongPass = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")
+      return strongPass.test(value)
+    },
+    message: 'Password must be at least 8 characters long and contain: 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character (Ex. $ % &)'
+  })
+
+  import firebase from 'firebase'
 
   export default {
     name: 'Register',
     components: {
-      Alert
+      Alert,
+      Loader,
+      ValidationProvider,
+      ValidationObserver
     },
     data() {
       return {
-        registerStatus: {
-          error: false,
+        registerAlert: {
+          visible: false,
           msg: '',
           alertType: ''
         },
-        rules: [
-          value => !!value || 'Required.'
-        ],
         input: {
-          username: '',
           password: '',
           confirmPassword: '',
           email: ''
-        }
+        },
+        isRegistering: false,
+        showPass: false,
+        showConfirmPass: false
       }
     },
     methods: {
-      preflight() {
-        const username = this.input.username
-        const password = this.input.password
-        const email = this.input.email
-        const confirmPassword = this.input.confirmPassword
-        let blankFields = []
-        if (username === '') blankFields.push('Username')
-        if (password === '') blankFields.push('Password')
-        if (email === '') blankFields.push('Email')
-        if (confirmPassword === '') blankFields.push('Confirm Password')
-        if (blankFields.length !== 0) {
-          let message
-          (blankFields.length === 1) ? message = blankFields.join(', ') + ' is a required field!' : message = blankFields.join(', ') + ' are required fields!'
-          return message
-        }
-        if (password !== confirmPassword) {
-          return 'Passwords do not match!'
-        }
-      },
+
       register() {
-        let validityCheck = this.preflight()
-        if (validityCheck !== '') {
-          this.setAlertStatus(validityCheck, 'error')
-        } else {
-          this.registerStatus.error = false
-        }
+        this.isRegistering = true
+        const self = this
+        firebase.auth().createUserWithEmailAndPassword(this.input.email, this.input.password).then(
+          function () {
+            self.isRegistering = false
+            self.setAlertStatus('User Created!', 'success')
+          },
+          function (err) {
+            self.isRegistering = false
+            if (err.code === 'auth/email-already-in-use') {
+              self.setAlertStatus('An account is already linked to that email address!', 'error')
+            }
+          }
+        )
       },
+
       setAlertStatus(msg, type) {
-        this.registerStatus.msg = msg
-        this.registerStatus.alertType = type
-        this.registerStatus.error = true
+        this.registerAlert.msg = msg
+        this.registerAlert.alertType = type
+        this.registerAlert.visible = true
       }
     }
   }
 </script>
 
-<style lang='scss'>
+<style lang="scss">
+@import '@/styles/_vars.scss';
 
+  #register {
+    background-color: $ottava-lime;
+    height: 100vh;
+  }
+
+  // #login-card {
+    
+  // }
 </style>
