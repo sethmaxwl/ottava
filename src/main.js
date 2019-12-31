@@ -18,12 +18,14 @@ import {
 } from '@fortawesome/fontawesome-svg-core'
 import {
   faMusic,
-  faHome
+  faHome,
+  faBars
 } from '@fortawesome/free-solid-svg-icons'
 
 FontAwesomeLibrary.add(
   faMusic,
-  faHome
+  faHome,
+  faBars
 )
 FontAwesomeDom.watch()
 Vue.component('font-awesome-icon', FontAwesomeIcon)

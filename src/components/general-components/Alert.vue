@@ -8,3 +8,9 @@
     props: ['msg', 'alertType']
   }
 </script>
+
+<style lang="scss">
+.velmld-overlay {
+  z-index: 4 !important;
+}
+</style>

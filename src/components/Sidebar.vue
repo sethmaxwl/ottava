@@ -48,9 +48,11 @@ export default {
 .theme--dark.v-navigation-drawer {
   background-color: #3e3e3eff !important;
 }
+
 #nav-drawer {
-  width: $navbar-margin !important;
+  width: 64px !important;
   transform: translate(0%) !important;
+  position: fixed;
 }
 
 </style>

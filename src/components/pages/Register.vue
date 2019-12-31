@@ -5,7 +5,7 @@
       v-layout.row.wrap.align-center
         div.spacer-md
         v-card.d-inline-block.mx-auto.align-center(outlined='', max-width='800', width='800')
-          v-container
+          v-container.content
             v-row(justify='center', align='center')
               v-col(cols='auto')
                 v-img(contain='', width='100', src='@/assets/ottava-logo.svg')
@@ -124,7 +124,8 @@
     height: 100vh;
   }
 
-  // #login-card {
-    
-  // }
+  .content {
+    padding-left: 10% !important;
+    padding-right: 10% !important;
+  }
 </style>

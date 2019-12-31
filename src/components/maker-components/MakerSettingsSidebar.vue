@@ -71,4 +71,16 @@
 .sidetext {
   color: #ffffff;
 }
+
+@media screen and (max-width: 1100px) {
+  #nav-settings {
+    margin-top: 56px;
+  }
+}
+
+@media screen and (min-width: 1101px) {
+  #nav-settings {
+    margin-top: 0;
+  }
+}
 </style>
