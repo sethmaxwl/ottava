@@ -35,27 +35,29 @@ const router = new Router({
       path: '/dashboard',
       name: 'Dashboard',
       component: Dashboard,
-      // meta: {
-      //   requiresAuth: true
-      // }
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/maker',
       name: 'Maker',
       component: Maker,
-      // meta: {
-      //   requiresAuth: true
-      // }
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/settings',
       name: 'Settings',
       component: Settings,
-      // meta: {
-      //   requiresAuth: true
-      // }
+      meta: {
+        requiresAuth: true
+      }
     },
-    { path: '/*', redirect: '/' }
+    { path: '/*',
+      redirect: '/'
+    }
   ]
 })
 
