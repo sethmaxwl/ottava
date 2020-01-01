@@ -93,12 +93,18 @@
       register() {
         this.isRegistering = true
         const self = this
-        firebase.auth().createUserWithEmailAndPassword(this.input.email, this.input.password).then(
-          function () {
-            self.isRegistering = false
-            self.setAlertStatus('User Created!', 'success')
-          },
-          function (err) {
+        const fb = firebase.auth()
+        fb.createUserWithEmailAndPassword(this.input.email, this.input.password).then(
+          () => {
+            fb.currentUser.sendEmailVerification().then(
+              () => {
+                self.isRegistering = false
+                self.setAlertStatus('An email has been sent to ' + fb.currentUser.email + '. Please verify your email address to continue.', 'success')
+              }
+            )
+          }
+        ).catch(
+          (err) => {
             self.isRegistering = false
             if (err.code === 'auth/email-already-in-use') {
               self.setAlertStatus('An account is already linked to that email address!', 'error')
