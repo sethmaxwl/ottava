@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import { MakerKeyboard } from '@/store/maker-keyboard'
 import { auth } from '@/store/auth'
+import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -10,5 +11,8 @@ export default new Vuex.Store({
   modules: {
     MakerKeyboard,
     auth
-  }
+  },
+  plugins: [createPersistedState({
+    paths: ['auth']
+  })]
 })

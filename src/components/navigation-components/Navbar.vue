@@ -10,6 +10,8 @@
           v-list-item-title Home
         v-list-item(two-line='', @click="redirect('/maker')")
           v-list-item-title Music Maker
+        v-list-item(two-line='', @click="redirect('/dashboard')")
+          v-list-item-title Dashboard
 </template>
 
 <script>
@@ -38,6 +40,7 @@ export default {
   top: 0;
   width: 100%;
   z-index: 5;
+  height: 56px !important;
 }
 
 #drawer {

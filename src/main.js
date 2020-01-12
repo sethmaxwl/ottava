@@ -19,13 +19,22 @@ import {
 import {
   faMusic,
   faHome,
-  faBars
+  faBars,
+  faUserEdit,
+  faCompactDisc,
+  faStar
 } from '@fortawesome/free-solid-svg-icons'
-
+import {
+  faUser
+} from '@fortawesome/free-regular-svg-icons'
 FontAwesomeLibrary.add(
   faMusic,
   faHome,
-  faBars
+  faBars,
+  faUser,
+  faUserEdit,
+  faCompactDisc,
+  faStar
 )
 FontAwesomeDom.watch()
 Vue.component('font-awesome-icon', FontAwesomeIcon)

@@ -45,6 +45,9 @@ export default {
   .side {
     display: block !important;
   }
+  .view {
+    margin-left: 64px;
+  }
 }
 
 #app {

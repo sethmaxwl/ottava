@@ -48,6 +48,7 @@
   })
 
   import firebase from 'firebase'
+  import router from '@/router'
 
   export default {
     name: 'Login',
@@ -84,6 +85,7 @@
           () => {
             self.$store.dispatch('auth/login', fb.currentUser)
             self.isLoggingIn = false
+            self.redirect('/dashboard')
           }
         ).catch(
           (err) => {
@@ -110,6 +112,10 @@
         this.loginAlert.msg = msg
         this.loginAlert.alertType = type
         this.loginAlert.visible = true
+      },
+
+      redirect(route) {
+        router.push(route)
       }
     }
   }
